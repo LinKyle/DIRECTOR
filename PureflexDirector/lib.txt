@@ -1,0 +1,8 @@
+commons-logging-1.1.jar
+javax.servlet.jar
+javax.servlet.jsp.jar
+json.jar
+log4j-1.2.12.jar
+org.apache.commons.el.jar
+org.apache.jasper.jar
+org.mortbay.jetty.jar

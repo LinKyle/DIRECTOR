@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="project" default="run">
+	<description>EasDirector</description>
+	<property name="projectRoot" value="E:\codespace\EAS_Director\PureflexDirector" />
+	<property name="targetDir" value="E:\EasDirector" />
+
+	<path id="lib.path">
+		<fileset dir="${projectRoot}">
+			<include name="lib/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="run" depends="buildpackage,synConfig">
+	</target>
+
+	<tstamp>
+		<format property="NOW" pattern="yyyyMMddhhmmss" locale="zh"/>
+	</tstamp>
+
+	<target name="buildpackage" description="打包">
+		<!--打包发布后的类-->
+		<delete file="${targetDir}\lib\eas.director.jar">
+		</delete>
+		<jar destfile="${targetDir}\lib\eas.director.jar">
+			<fileset dir="${projectRoot}\build\classes" includes="**/*" />
+			<manifest>
+				<attribute name="Built-By" value="Kyle"/>
+				<attribute name="BuildNumber" value="${DSTAMP}"/>
+				<attribute name="Class-Path" value="commons-logging-1.1.jar javax.servlet.jar javax.servlet.jsp.jar json.jar log4j-1.2.12.jar org.apache.commons.el.jar org.apache.jasper.jar org.mortbay.jetty.jar"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="synConfig" description="同步配置和脚本">
+		<copydir dest="${targetDir}/WebContent" src="${projectRoot}/WebContent">
+		</copydir>
+		<copydir dest="${targetDir}/bin" src="${projectRoot}/bin">
+		</copydir>
+		<copydir dest="${targetDir}/lib" src="${projectRoot}/lib" >
+		</copydir>
+		<copydir dest="${targetDir}/config" src="${projectRoot}/config" >
+		</copydir>
+	</target>
+
+</project>
