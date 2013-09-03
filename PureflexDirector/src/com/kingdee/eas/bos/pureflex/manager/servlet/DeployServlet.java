@@ -25,7 +25,6 @@ public class DeployServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setHeader(arg0, arg1);
 	}
 
 	/**

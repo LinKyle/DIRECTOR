@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="project" default="run">
 	<description>EasDirector</description>
-	<property name="projectRoot" value="E:\codespace\EAS_Director\PureflexDirector" />
+	<property name="projectRoot" value="C:\Users\Administrator\DIRECTOR\PureflexDirector" />
 	<property name="targetDir" value="E:\EasDirector" />
 
 	<path id="lib.path">

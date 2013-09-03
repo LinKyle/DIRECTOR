@@ -29,6 +29,10 @@ public class AppContext {
 		loadVmProperties(configFilePath);
 		this.webAppIp = System.getProperty("bindIp", "");
 		this.webAppPort = System.getProperty("webAppPort","19691");
+//		this.sceServerIp = System.getProperty("sceServerIp","localhost");
+//		this.sceServerPort = System.getProperty("sceServerPort","8080");
+//		sceServerSecuredUrl = "http://"+this.sceServerIp+":"+sceServerPort+"/cloud/api"; 
+//		sceServerUnSecuredUrl = "http://"+this.sceServerIp+":"+sceServerPort+"/unsecured/cloud/api"; 
 	}
 	
 	private void loadVmProperties(String configFilePath) {
@@ -66,4 +70,5 @@ public class AppContext {
 	public String getXXX(){
 		return null;
 	}
+	
 }
