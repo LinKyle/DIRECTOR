@@ -1,33 +1,33 @@
 /**/
 
-.wrapper {
+.login-wrapper {
     margin: auto;
     width: 850px;
 }
 
 /*logo*/
-.ic_logo {
+.login-top {
     overflow: hidden;
     height: 45px;
 }
 /*left*/
-.page_login_col1 {
+.login-left {
     display: inline;
     float: left;
     width: 400px;
 }
 /*right*/
-.web_login {
+.login-right {
     width: 370px;
     position: relative;
     padding-bottom: 65px;
 }
-.web_login .login_form {
+.login-right .login_form {
     width: 272px;
     margin: 0px auto;
 }
 
-.web_login .uinArea {
+.login-right .uinArea {
     height: 55px;
     position: relative;
     z-index: 10;

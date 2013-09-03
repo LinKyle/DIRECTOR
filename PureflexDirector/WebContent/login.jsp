@@ -9,7 +9,7 @@
 <body>
 	<div id="login">
 		<div id="login-wrapper">
-			<div id="login-top" style="width: 612px;">
+			<div id="login-top">
 			</div>
 			<div id="login-content">
 				<div id="login-left">
