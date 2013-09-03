@@ -1,0 +1,34 @@
+/**/
+
+.wrapper {
+    margin: auto;
+    width: 850px;
+}
+
+/*logo*/
+.ic_logo {
+    overflow: hidden;
+    height: 45px;
+}
+/*left*/
+.page_login_col1 {
+    display: inline;
+    float: left;
+    width: 400px;
+}
+/*right*/
+.web_login {
+    width: 370px;
+    position: relative;
+    padding-bottom: 65px;
+}
+.web_login .login_form {
+    width: 272px;
+    margin: 0px auto;
+}
+
+.web_login .uinArea {
+    height: 55px;
+    position: relative;
+    z-index: 10;
+}
