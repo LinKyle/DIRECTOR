@@ -11,14 +11,11 @@ import org.mortbay.util.InetAddrPort;
 public class WebServer {
 	private static Logger logger = Logger.getLogger(WebServer.class);
 	private Server server;
-	private AppContext appContext;
 	public static void main(String[] args) {
 		logger.info("==============================================");
 		logger.info("           EAS DIRECTOR SERVER                ");
-////		logger.info("");
 		logger.info("==============================================");
 
-//		System.setProperty("APP_HOME", "E:/EasDirector");
 		WebServer webserver = new WebServer();
 		webserver.init();
 		webserver.start();
@@ -26,10 +23,9 @@ public class WebServer {
 
 	private void init() {
 		this.server = new Server();
-		appContext = AppContext.getInstance();
 		try {
-			this.server.addListener(new InetAddrPort(appContext.getWebAppPort()));
-			WebApplicationContext webContext = this.server.addWebApplication("/easDirector", appContext.getHome()+"/WebContent");
+			this.server.addListener(new InetAddrPort(AppContext.get(AppContext.WEB_APP_PORT,"16961")));
+			WebApplicationContext webContext = this.server.addWebApplication("/easDirector", AppContext.getHome()+"/WebContent");
 		} catch (UnknownHostException e) {
 			logger.error(e);
 		} catch (IOException e) {

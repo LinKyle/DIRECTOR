@@ -21,9 +21,9 @@
       <div id="title">EAS专家部署系统</div>
       <ul id="main-nav">
 		<!-- Add the class "current" to current menu item -->
-        <li> <a href="version.jsp" class="nav-top-item current">EAS安装</a> </li>
-        <li> <a href="funciton.jsp" class="nav-top-item">并发数调整</a></li>
-        <li> <a href="button.jsp" class="nav-top-item">虚拟机配置查看</a></li>
+        <li> <a href="version.jsp" class="nav-top-item current">EAS安装</a></li>
+        <!-- <li> <a href="funciton.jsp" class="nav-top-item">并发数调整</a></li>
+        <li> <a href="button.jsp" class="nav-top-item">虚拟机配置查看</a></li> -->
       </ul>
       <!-- End #main-nav -->
     </div>
@@ -45,14 +45,15 @@
       <!-- End .content-box-header -->
       <div class="content-box-content">
 	  	<div class="tab-content default-tab" id="tab1">
-	  			
+	  			<H1>TAB1</H1>
         </div>
         <!-- End #tab1 -->
        <div class="tab-content" id="tab2">
-       		
+       		<H1>TAB2</H1>
        </div>
         <!-- End #tab2 -->
         <div class="tab-content" id="tab3">
+       		 <H1>TAB3</H1>
         </div>
         <!-- End #tab3 -->
       </div>

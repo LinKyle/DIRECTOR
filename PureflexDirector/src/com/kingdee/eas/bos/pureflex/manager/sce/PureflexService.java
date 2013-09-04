@@ -6,5 +6,5 @@ import com.kingdee.eas.bos.pureflex.manager.sce.info.WorkLoadInfo;
 
 public interface PureflexService {
 	public boolean loginSceServer(String user,String password) throws Exception;
-	public List<WorkLoadInfo> getWorkLoadList();
+//	public List<WorkLoadInfo> getWorkLoadList();
 }

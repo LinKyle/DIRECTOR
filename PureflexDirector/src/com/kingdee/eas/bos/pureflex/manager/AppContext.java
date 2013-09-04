@@ -3,72 +3,90 @@ package com.kingdee.eas.bos.pureflex.manager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.kingdee.eas.bos.pureflex.manager.util.InetUtil;
-import com.kingdee.eas.bos.pureflex.manager.util.StringUtil;
-
 public class AppContext {
-	private static AppContext context = new AppContext();
 	private static Logger logger = Logger.getLogger(AppContext.class);
-	private String appHome;
-	private String webAppIp;
-	private String webAppPort;
+	public static final String APP_HOME = "APP_HOME";
+	public static final String WEB_APP_IP = "webAppIp";
+	public static final String WEB_APP_PORT = "webAppPort";
+	public static final String EAS_WORKLOAD_NAME = "easWorkload";
+	private static String contextRecordPath;
+	private static Properties contents;
 	
-	public static AppContext getInstance(){
-		return context;
+	static{
+		contextRecordPath = System.getProperty(AppContext.APP_HOME) + "/config/appConfig.properties";
+		loadContext();
 	}
 	
-	private AppContext(){
-		//load vm properties
-		this.appHome = System.getProperty("APP_HOME");
-		String configFilePath = appHome + "/config/appConfig.properties";
-		loadVmProperties(configFilePath);
-		this.webAppIp = System.getProperty("bindIp", "");
-		this.webAppPort = System.getProperty("webAppPort","19691");
-//		this.sceServerIp = System.getProperty("sceServerIp","localhost");
-//		this.sceServerPort = System.getProperty("sceServerPort","8080");
-//		sceServerSecuredUrl = "http://"+this.sceServerIp+":"+sceServerPort+"/cloud/api"; 
-//		sceServerUnSecuredUrl = "http://"+this.sceServerIp+":"+sceServerPort+"/unsecured/cloud/api"; 
-	}
-	
-	private void loadVmProperties(String configFilePath) {
-		File vmPropertiesFile = new File(configFilePath)  ;
+	private static void loadContext() {
+		File contextRecordFile = new File(contextRecordPath)  ;
 		try {
-			FileInputStream fis = new FileInputStream(vmPropertiesFile);
-			Properties p = new Properties();
-			p.load(fis);
+			FileInputStream fis = new FileInputStream(contextRecordFile);
+			contents = new Properties();
+			contents.load(fis);
 			fis.close();
-			System.getProperties().putAll(p);
+			System.getProperties().putAll(contents);
 		} catch (FileNotFoundException e) {
-			logger.error("load vm properties from "+configFilePath+" failed..", e);
+			logger.error("load context properties from "+contextRecordPath+" failed..", e);
+			System.exit(-1);
 		}catch (IOException e) {
-			logger.warn("i/o failed.. target " + configFilePath, e);
+			logger.warn("i/o failed.. target " + contextRecordPath, e);
+			System.exit(-1);
 		}
+	}
+	
+	
+	public static boolean saveContext(){
+		File contextRecordFile = new File(contextRecordPath)  ;
+		try {
+			FileWriter fw = new FileWriter(contextRecordFile, false);
+			contents.store(fw, SimpleDateFormat.getInstance().format(new Date()));
+			return true;
+		} catch (FileNotFoundException e) {
+			logger.error("save context properties to "+contextRecordPath+" failed..", e);
+			return false;
+		}catch (IOException e) {
+			logger.warn("i/o failed.. target " + contextRecordPath, e);
+			return false;
+		}
+			
+	}
+	
+	/**
+	 * @param key
+	 * @param value
+	 */
+	public static void put(String key ,String value){
+		contents.setProperty(key, value);
+	}
+	
+	
+	/**
+	 * @param key
+	 * @return
+	 */
+	public static String get(String key){
+		return contents.getProperty(key);
 	}
 
-	public String getHome(){
-		return this.appHome;
+	/**
+	 * @param key
+	 * @param defaultValue
+	 * @return
+	 */
+	public static String get(String key,String defaultValue){
+		return contents.getProperty(key, defaultValue);
 	}
 	
-	public String getWebAppIP(){
-		if(StringUtil.hasText(this.webAppIp)){
-			//do nothing
-		}else{
-			this.webAppIp = InetUtil.getLocalIP();
-		}
-		return this.webAppIp;
+	public static String getHome(){
+		return System.getProperty(APP_HOME);
 	}
-	
-	public String getWebAppPort(){
-		return this.webAppPort;
-	}
-	
-	public String getXXX(){
-		return null;
-	}
-	
 }
