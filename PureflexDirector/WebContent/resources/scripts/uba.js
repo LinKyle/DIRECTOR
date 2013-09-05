@@ -1,26 +1,4 @@
 $(document).ready(function(){
-	
-	//Sidebar Accordion Menu:
-		
-/*		$("#main-nav li ul").hide(); // Hide all sub menus
-		$("#main-nav li a.current").parent().find("ul").slideToggle("slow"); // Slide down the current menu item's sub menu
-		
-		$("#main-nav li a.nav-top-item").click( // When a top menu item is clicked...
-			function () {
-				$(this).parent().siblings().find("ul").slideUp("normal"); // Slide up all sub menus except the one clicked
-				$(this).next().slideToggle("normal"); // Slide down the clicked sub menu
-				return false;
-			}
-		);
-		
-		$("#main-nav li a.no-submenu").click( // When a menu item with no sub menu is clicked...
-			function () {
-				window.location.href=(this.href); // Just open the link instead of a sub menu
-				return false;
-			}
-		); */
-
-    // Sidebar Accordion Menu Hover Effect:
 		
 		$("#main-nav li .nav-top-item").hover(
 			function () {
@@ -30,63 +8,25 @@ $(document).ready(function(){
 				$(this).stop().animate({ paddingRight: "15px" });
 			}
 		);
-
-    // Content box tabs:
 		
 		$('.content-box .content-box-content div.tab-content').hide(); // Hide the content divs
 		$('ul.content-box-tabs li').hide();
 		$('ul.content-box-tabs li a.default-tab').addClass('current'); // Add the class "current" to the default tab
 		$('.content-box-content div.default-tab').show(); // Show the div with class "default-tab"
 		$('ul.content-box-tabs li a.default-tab').parent().show();
-		/*$('.content-box ul.content-box-tabs li a').click( // When a tab is clicked...
-			function() { 
-				$(this).parent().siblings().find("a").removeClass('current'); // Remove "current" class from all tabs
-				$(this).addClass('current'); // Add class "current" to clicked tab
-				var currentTab = $(this).attr('href'); // Set variable "currentTab" to the value of href of clicked tab
-				$(currentTab).siblings().hide(); // Hide all content divs
-				$(currentTab).show(); // Show the content div with the id equal to the id of clicked tab
-				return false; 
-			}
-		);*/
-
-    // Alternating table rows:
 		
-		//$('tbody tr:even').addClass("alt-row"); // Add class "alt-row" to even table rows
-
-    // Check all checkboxes when the one in a table head is checked:
-		
-		$('.check-all').click(
-			function(){
-				$(this).parent().parent().parent().parent().find("input[type='checkbox']").attr('checked', $(this).is(':checked'));   
-			}
-		);
+		if($('#cache').attr('isFirst') == "true"){
+			$('#AlreadyInstallDesc').hide();
+			$('#concurrentPage').hide();
+			$('#FirstInstallDesc').show();
+		}else{
+			$('#FirstInstallDesc').hide();
+			$('#concurrentPage').show();
+			$('#AlreadyInstallDesc').show();
+		}
 		
 });
-
-
-Date.prototype.format = function(format){ 
-	var o = { 
-	"M+" : this.getMonth()+1, //month 
-	"d+" : this.getDate(), //day 
-	"h+" : this.getHours(), //hour 
-	"m+" : this.getMinutes(), //minute 
-	"s+" : this.getSeconds(), //second 
-	"q+" : Math.floor((this.getMonth()+3)/3), //quarter 
-	"S" : this.getMilliseconds() //millisecond 
-	};
-	if(/(y+)/.test(format)) { 
-		format = format.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
-	} 
-
-	for(var k in o) { 
-		if(new RegExp("("+ k +")").test(format)) { 
-			format = format.replace(RegExp.$1, RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length)); 
-		} 
-	} 
-	return format; 
-
-};
-
+var tablist = new Array("installDesc","virtualSetting","storeSetting","settingReport","taskProcess");
 function openTab2(){
 	$('#link1').removeClass('current');
 	$('#link2').addClass('current');
@@ -115,5 +55,42 @@ function clickTab2(){
 	}
 }
 
+function switchTab(switchTabId){
+	for (index in tablist)
+	{
+		var tabId = tablist[index];
+		if(tabId == switchTabId){
+			$('#'+tabId+'Link').addClass("current");
+			$('#'+tabId+'Link').parent().show();
+			$('#'+tabId).addClass("default-tab");
+			$('#'+tabId).siblings().hide();
+			$('#'+tabId).show();
+		}else{
+			$('#'+tabId+'Link').removeClass("current");
+			$('#'+tabId).removeClass("default-tab");
+		}
+	}
+}
+
+//传来下个的tabId,以及要执行的任务方法
+function doNext(nextTabId){
+	
+	switchTab(nextTabId);
+}
+
+function doPre(preTabId){
+	switchTab(preTabId);
+}
+
+function doTaskSuccess(){
+	$('#cache').attr('isFirst',"false");
+	$('#AlreadyInstallDesc').show();
+	$('#installDesc').hide();
+	$('#concurrentPage').show();
+}
+
+function gotoConcurrentPage(){
+	window.location.replace("concurrent.html");
+}
 
 
