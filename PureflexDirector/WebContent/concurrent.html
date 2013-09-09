@@ -40,12 +40,18 @@
       <!-- End .content-box-header -->
       <div class="content-box-content">
 	  	<div class="tab-content default-tab" id="virtualSetting">
-	  			<p><span>并发用户数</span>
-	  			<input type="radio" name="concurrent" value="ls300" /> 小于300并发
-	  			<input type="radio" name="concurrent" value="gt300ls600" /> 300-600并发
-	  			<input type="radio" name="concurrent" value="gt600ls800" /> 600-800并发
-	  			</p>
-	  			<input style="margin: 0px 0px 0px 400px;" class="button" type="button"  value="调整" />
+	  			<table style="width: 70%;">
+	  				<tbody>
+	  					<tr><td><span>并发用户数</span></td>
+	  						<td>
+	  							<input type="radio" name="concurrent" checked="checked" value="ls300" /> 小于300并发
+					  			<input type="radio" name="concurrent" value="gt300ls600" /> 300-600并发
+					  			<input type="radio" name="concurrent" value="gt600ls800" /> 600-800并发
+	  						</td>
+	  					</tr>
+	  				</tbody>
+	  			</table>
+	  			<input style="margin: 20px 0px 0px 400px;" class="button" type="button"  value="调整" />
         </div>
         <!-- End #tab1 -->
       </div>

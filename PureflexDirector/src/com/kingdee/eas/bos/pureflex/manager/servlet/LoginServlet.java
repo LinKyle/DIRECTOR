@@ -16,6 +16,7 @@ import com.kingdee.eas.bos.pureflex.manager.exception.LoginErrorException;
 import com.kingdee.eas.bos.pureflex.manager.sce.PureflexService;
 import com.kingdee.eas.bos.pureflex.manager.sce.PureflexServiceImpl;
 import com.kingdee.eas.bos.pureflex.manager.util.IOUtil;
+import com.kingdee.eas.bos.pureflex.manager.util.StringUtil;
 import com.sun.xml.internal.ws.util.StringUtils;
 
 public class LoginServlet extends HttpServlet{
@@ -32,13 +33,9 @@ public class LoginServlet extends HttpServlet{
 
 		    JSONObject result = new JSONObject();
 		    PureflexService secService = new PureflexServiceImpl();
-		    boolean success = false;
-		    String  tips = "";
-		    try{
-				success = secService.loginSceServer(user, password);
-		    }catch( Exception ex){
-		    	tips = ex.getMessage();
-		    }
+		    String  loginTips  = secService.loginSceServer(user, password);
+		    //如果没有登录信息返回，则说明登录成功。
+		    boolean success = !StringUtil.hasText(loginTips);
 		    if(success){
 	          request.getSession().setAttribute("user", "admin");
 	        } else {
@@ -46,7 +43,7 @@ public class LoginServlet extends HttpServlet{
 	        }
 		    try {
 		    	result.put("success", success);
-		        result.put("tips", tips);
+		        result.put("tips", loginTips);
 		    } catch (JSONException e) {
 		    	this.logger.error("it will not happen", e);
 		    }

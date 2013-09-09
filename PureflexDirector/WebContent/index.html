@@ -54,43 +54,65 @@
         	</div>
         </div>
 	  	<div class="tab-content " id="virtualSetting">
-	  			<p>虚拟机配置</p>
-	  			<p><span>拓扑配置</span>
-	  			<input type="radio" name="topology" value="powerx86" /> Power+X86
-	  			<input type="radio" name="topology" value="power" /> 全Power
-	  			<input type="radio" name="topology" value="x86" /> 全X86
-	  			</p>
-	  			<p><span>数据库服务器方案</span>
-	  			<input type="radio" name="dbResolution" value="oracleHA" /> OracleHA
-	  			</p>
-	  			<p><span>并发用户数</span>
-	  			<input type="radio" name="concurrent" value="ls300" /> 小于300并发
-	  			<input type="radio" name="concurrent" value="gt300ls600" /> 300-600并发
-	  			<input type="radio" name="concurrent" value="gt600ls800" /> 600-800并发
-	  			</p>
-	  			<p><span>应用服务器VIP</span>
-	  			<input type="text" name="easIp" /> 
-	  			</p>
-	  			<input style="margin: 0px 0px 0px 400px;" class="button" type="button"  value="下一步" onclick="doNext('storeSetting')"/>
+	  			<p class="title">虚拟机配置</p>
+	  			<table style="width: 70%;">
+	  				<tbody>
+	  					<tr><td><span>拓扑配置</span></td>
+	  					<td>
+	  						<input type="radio" name="topology" value="powerx86" /> Power+X86
+	  						<input type="radio" name="topology" checked="checked" value="power" /> 全Power
+	  						<input type="radio" name="topology" value="x86" /> 全X86
+	  					</td>
+	  					</tr>
+	  					<tr><td><span>数据库服务器方案</span></td>
+	  					<td>
+	  						<input type="radio" name="dbResolution" checked="checked" value="oracleHA" /> OracleHA
+	  					</td>
+	  					</tr>
+	  					<tr><td><span>并发用户数</span></td>
+	  						<td>
+	  							<input type="radio" name="concurrent" checked="checked" value="ls300" /> 小于300并发
+					  			<input type="radio" name="concurrent" value="gt300ls600" /> 300-600并发
+					  			<input type="radio" name="concurrent" value="gt600ls800" /> 600-800并发
+	  						</td>
+	  					</tr>
+	  					<tr><td><span>应用服务器VIP</span></td>
+	  						<td>
+	  							<input type="text" name="easIp" /> 
+	  						</td>
+	  					</tr>
+	  				</tbody>
+	  			</table>
+	  			<input style="margin: 20px 0px 0px 400px;" class="button" type="button"  value="下一步" onclick="doNext('storeSetting')"/>
         </div>
         <!-- End #tab1 -->
-       <div class="tab-content " id="storeSetting">
-       		<p>连接存储设备</p>
-	  			<p><span>存储设备IP</span>
-	  			<input type="text" name="storeIp" /> 
-	  			</p>
-	  			<p><span>用户标识</span>
-	  			<input type="text" name="storeUser" /> 
-	  			</p>
-	  			<p><span>用户口令</span>
-	  			<input type="password" name="storePassword" /> 
-	  			</p>
-	  			<input style="margin: 0px 0px 0px 400px;" class="button" type="button"  value="上一步"  onclick="doPre('virtualSetting')"/>
-	  			<input style="margin: 0px 0px 0px 0px;" class="button" type="button"  value="下一步" onclick="doNext('settingReport')"/>
+       <div class="tab-content" id="storeSetting">
+       		<p class="title">连接存储设备</p>
+       		<table style="width: 50%;">
+       			<tbody>
+       				<tr><td><span>存储设备IP</span></td>
+	  					<td>
+	  						<input type="text" name="storeIp" /> 
+	  					</td>
+	  				</tr>
+	  				<tr><td><span>用户标识</span></td>
+	  					<td>
+	  						<input type="text" name="storeUser" /> 
+	  					</td>
+	  				</tr>
+	  				<tr><td><span>用户口令</span></td>
+	  					<td>
+	  						<input type="password" name="storePassword" />  
+	  					</td>
+	  				</tr>
+       			</tbody>
+       		</table>
+  			<input style="margin: 20px 0px 0px 280px;" class="button" type="button"  value="上一步"  onclick="doPre('virtualSetting')"/>
+  			<input style="margin: 20px 0px 0px 0px;" class="button" type="button"  value="下一步" onclick="doNext('settingReport')"/>
        </div>
         <!-- End #tab2 -->
         <div class="tab-content" id="settingReport">
-       	    <table style="width: 50%;margin: 20px 0px 20px 50px;">
+       	    <table style="width: 60%;">
             	<thead>
               		<tr>
                		<th>属性名称</th>
@@ -136,8 +158,8 @@
               		</tr>
             </tbody>
           </table>
-          	<input style="margin: 0px 0px 0px 400px;" class="button" type="button"  value="上一步" onclick="doPre('storeSetting')"/>
-	  		<input style="margin: 0px 0px 0px 0px;" class="button" type="button"  value="开始安装" onclick="doNext('taskProcess')"/>
+          	<input style="margin: 20px 0px 0px 340px;" class="button" type="button"  value="上一步" onclick="doPre('storeSetting')"/>
+	  		<input style="margin: 20px 0px 0px 0px;" class="button" type="button"  value="开始安装" onclick="doNext('taskProcess')"/>
         </div>
          <div class="tab-content" id="taskProcess">
          		<table style="width: 50%;margin: 20px 0px 20px 50px;">
@@ -177,7 +199,7 @@
   </div>
   <!-- End #main-content -->
 </div>
-<div id="cache" isFirst="false" >
+<div id="cache" isFirst="true" >
 </div>
 </body>
 </html>

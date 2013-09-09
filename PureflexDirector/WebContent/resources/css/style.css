@@ -304,6 +304,7 @@ ul.content-box-tabs {
                 float: left;
                 padding: 12px 15px 0 0 !important;
 				margin: 0 !important;
+				font-size: 16;
                 }
 
 ul.content-box-tabs li {
@@ -579,4 +580,11 @@ word-break : break-all;
 	background: none;
 	margin: 50px 50px 50px 50px;
 }
-
+.tab-content{
+	margin: 20px 0 0 20px;
+	font-size: 16;
+}
+.title{
+	font-size:18;
+	 font-weight: bold;
+}
