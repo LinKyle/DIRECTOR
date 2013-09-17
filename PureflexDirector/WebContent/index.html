@@ -49,7 +49,7 @@
       	<div class="tab-content  default-tab" id="installDesc">
       		<div id="FirstInstallDesc">
 	  			<p id="installDesc" >EAS专家部署系统，基于pureflex系统，通过内置专家模板快速搭建EAS最佳环境，保证最佳灵活性，最佳配置</p>
-        		<input style="margin: 0px 0px 0px 400px;" class="button" type="button"  value="开始安装" onclick="doNext('virtualSetting')"/>
+        		<input style="margin: 0px 0px 0px 400px;" class="button" type="button"  value="开始安装" onclick="doNext('virtualSetting',doNothing)"/>
         	</div>
         	<div id="AlreadyInstallDesc">
 	  			<p id="installDesc" >您已经安装部署过EAS，如果因为业务需求，需要调整用户并发数，请点击"调整并发数"按钮</p>
@@ -62,9 +62,9 @@
 	  				<tbody>
 	  					<tr><td><span>拓扑配置</span></td>
 	  					<td>
-	  						<input type="radio" name="topology" value="powerx86" /> Power+X86
-	  						<input type="radio" name="topology" checked="checked" value="power" /> 全Power
-	  						<input type="radio" name="topology" value="x86" /> 全X86
+	  						<input type="radio" name="topology"  disabled="disabled" value="powerx86" /> Power+X86
+	  						<input type="radio" name="topology"  checked="checked" value="power" /> 全Power
+	  						<input type="radio" name="topology"  disabled="disabled" value="x86" /> 全X86
 	  					</td>
 	  					</tr>
 	  					<tr><td><span>数据库服务器方案</span></td>

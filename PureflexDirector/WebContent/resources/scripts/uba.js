@@ -1,5 +1,4 @@
 $(document).ready(function(){
-		
 		$("#main-nav li .nav-top-item").hover(
 			function () {
 				$(this).stop().animate({ paddingRight: "25px" }, 200);
@@ -45,16 +44,22 @@ function switchTab(switchTabId){
 	}
 }
 
-function doNext(nextTabId){
+function doNext(nextTabId,n){
 	switchTab(nextTabId);
+	n();
 }
 
-function doPre(preTabId){
+function doPre(preTabId,p){
 	switchTab(preTabId);
+	p();
 }
 
 function doTask(){
 	//检测参数
+	var easIp = "";
+	var storeServerIp = "";
+	var storeServerUser = "";
+	var storeServerPassword = "";
 	
 	doNext('taskProcess');
 	doRealTask();
@@ -71,4 +76,6 @@ function gotoConcurrentPage(){
 	window.location.replace("concurrent.html");
 }
 
+function doNothing(){
+}
 
