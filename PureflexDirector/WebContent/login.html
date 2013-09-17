@@ -2,12 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script type="text/javascript"
-	src="resources/scripts/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="resources/scripts/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="resources/scripts/login.js"></script>
-
-<link rel="stylesheet" href="resources/css/login.css" type="text/css"
-	media="screen" />
+<link rel="stylesheet" href="resources/css/login.css" type="text/css" media="screen" />
 <title>EAS专家部署系统登录</title>
 </head>
 <body style="">
@@ -17,7 +14,7 @@
 			<div id="login_form">
 				<table style="margin: 0px auto;">
 					<tr>
-						<td class="login_txt">管理员:</td>
+						<td class="login_txt">SCE管理员:</td>
 					</tr>
 					<tr>
 						<td><input type="text" name="adminName" id="user"
@@ -33,7 +30,8 @@
 					<tr>
 						<td ><input name="Submit" type="submit"
 							class="login_button" id="Submit" value="登 录" onclick="login()" />
-							</td>
+							<img id="loading" style="display:none;" alt="登录中..." src="./resources/images/loading.gif" />
+						</td>
 					</tr>
 					<tr>
 						<td><span id="loginTip"></span>

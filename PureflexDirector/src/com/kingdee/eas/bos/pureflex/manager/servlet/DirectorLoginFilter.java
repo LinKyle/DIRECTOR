@@ -31,8 +31,7 @@ public class DirectorLoginFilter implements Filter{
 	    String username = (String)httpRequest.getSession().getAttribute("user");
 	    this.logger.info("filter , user request URI:" + httpRequest.getRequestURI());
 	    if ((!StringUtil.hasText(username)) && (httpRequest.getRequestURI().indexOf("login") < 0)) {
-	    	//TODO
-	    	httpResponse.sendRedirect("/mobilemonitor/login.html");
+	    	httpResponse.sendRedirect("/easDirector/login.html");
 	    	return;
 	    }
 	    chain.doFilter(request, response);

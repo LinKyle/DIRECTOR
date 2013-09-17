@@ -86,9 +86,30 @@ a:focus {
 	margin: 20px 0px;
 	border-radius: 3px 3px 3px 3px;
 }
+
+
+
+.login_button_disabled{
+	width: 80px;
+	font-family: Verdana, Arial, sans-serif;
+	display: inline-block;
+	background: #809300 ;
+	border: 1px solid #459300 !important;
+	padding: 4px 7px 4px 7px !important;
+	color: #fff !important;
+	font-size: 16px !important;
+	margin: 20px 0px;
+	border-radius: 3px 3px 3px 3px;
+}
+
 #loginTip{
 	font-size: 14px;
 	color:#ff0000;
+}
+
+#loading{
+	font-size: 14px;
+	margin: 0px 20px -10px 20px;
 }
 
 #footer {
