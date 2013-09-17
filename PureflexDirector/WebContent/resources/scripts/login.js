@@ -16,7 +16,7 @@
 	}
 	function showLoginTips(loginResult){
 		if(loginResult.success){
-			window.location.href="\index.jsp";
+			window.location.href="\index.html";
 		}else{
 			$('#loginTip').text(loginResult.tips);
 		}

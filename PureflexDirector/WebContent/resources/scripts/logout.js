@@ -3,8 +3,11 @@
 		  type:"get",
 		  url:"./logout.action",
 		  dataType:"json",
-		  success:showLoginTips
+		  success:gotoLoginPage
 		});
 	}
-	function showLoginTips(){
+function gotoLoginPage(result){
+	if(result.success){
+		window.location.replace("login.html");
 	}
+}

@@ -25,8 +25,18 @@ public class LogoutServlet extends HttpServlet{
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		 	response.setContentType("application/json;charset=UTF-8");
+		    PrintWriter infoStream = response.getWriter();
 		    request.setCharacterEncoding("UTF-8");
 		    request.getSession().setAttribute("user", "");
-		    response.sendRedirect("/easDirector/login.html");
+		    JSONObject result = new JSONObject();
+		    try {
+		    	result.put("success", true);
+		    } catch (JSONException e) {
+		    	this.logger.error("it will not happen", e);
+		    }
+
+		    infoStream.println(result.toString());
+		    infoStream.flush();
+		    infoStream.close();
 	}
 }

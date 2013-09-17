@@ -24,36 +24,9 @@ $(document).ready(function(){
 			$('#concurrentPage').show();
 			$('#AlreadyInstallDesc').show();
 		}
-		
 });
+
 var tablist = new Array("installDesc","virtualSetting","storeSetting","settingReport","taskProcess");
-function openTab2(){
-	$('#link1').removeClass('current');
-	$('#link2').addClass('current');
-	$('#link2').parent().show();
-	$('#tab1').hide();
-	$('#tab2').show();
-}
-
-function clickTab1(){
-	if(!$('#link1').hasClass("current")){
-		$('#link2').removeClass('current');
-		//$('#link1').parent().siblings().hide();
-		$('#link1').addClass('current');
-		$('#tab1').siblings().hide();
-		$('#tab1').show();
-	}
-}
-
-function clickTab2(){
-	if(!$('#link2').hasClass("current")){
-		$('#link1').removeClass('current');
-		//$('#link3').parent().hide();
-		$('#link2').addClass('current');
-		$('#tab2').siblings().hide();
-		$('#tab2').show();
-	}
-}
 
 function switchTab(switchTabId){
 	for (index in tablist)
@@ -72,14 +45,19 @@ function switchTab(switchTabId){
 	}
 }
 
-//´«À´ÏÂ¸öµÄtabId,ÒÔ¼°ÒªÖ´ĞĞµÄÈÎÎñ·½·¨
 function doNext(nextTabId){
-	
 	switchTab(nextTabId);
 }
 
 function doPre(preTabId){
 	switchTab(preTabId);
+}
+
+function doTask(){
+	//æ£€æµ‹å‚æ•°
+	
+	doNext('taskProcess');
+	doRealTask();
 }
 
 function doTaskSuccess(){
