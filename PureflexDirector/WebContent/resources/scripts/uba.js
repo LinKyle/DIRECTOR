@@ -45,24 +45,47 @@ function switchTab(switchTabId){
 }
 
 function doNext(nextTabId,n){
-	switchTab(nextTabId);
-	n();
+	if(n()){
+		switchTab(nextTabId);
+	}
+	
 }
 
 function doPre(preTabId,p){
-	switchTab(preTabId);
-	p();
+	if(p()){
+		switchTab(preTabId);
+	}
 }
 
 function doTask(){
 	//检测参数
-	var easIp = "";
-	var storeServerIp = "";
-	var storeServerUser = "";
-	var storeServerPassword = "";
-	
-	doNext('taskProcess');
-	doRealTask();
+	var checkTips = "温馨提示：\n";
+	var easIp = $("input[name='easIp']").val();
+	var storeServerIp = $("input[name='storeIp']").val();
+	var storeServerUser = $("input[name='storeUser']").val();
+	var storeServerPassword = $("input[name='storePassword']").val();
+	if(checkInputEmpty(easIp)){
+		checkTips += "步骤1 中的应用服务器 ip 不能为空。\n";
+	}
+	if(checkIpFormatError(easIp)){
+		checkTips += "步骤1 中的应用服务器 ip 输入的格式不正确。\n";
+	}
+	if(checkInputEmpty(storeServerIp)){
+		checkTips += "步骤2 中的存储服务器 ip 不能为空。 \n";
+	}
+	if(checkIpFormatError(storeServerIp)){
+		checkTips += "步骤2 中的存储服务器 ip 输入的格式不正确。\n";
+	}
+	if(checkInputEmpty(storeServerUser)){
+		checkTips += "步骤2 中的存储服务器 用户名 不能为空。\n";
+	}
+	if(checkInputEmpty(storeServerPassword)){
+		checkTips += "步骤2 中的存储服务器 密码 不能为空。\n";
+	}
+	if(checkTips.length == "温馨提示：\n".length){
+		doNext('taskProcess');
+		doRealTask();
+	}
 }
 
 function doTaskSuccess(){
@@ -77,5 +100,27 @@ function gotoConcurrentPage(){
 }
 
 function doNothing(){
+	return true;
+}
+
+function checkIpFormatError(inputText){
+	var ips = inputText.split(".");
+	if(ips.length != 4){
+		return true;
+	}
+	for(index in ips){
+		if(ips[index] < 0 || ips[index] > 255){
+			return true;
+		}
+	}
+	return false;
+}
+
+function checkInputEmpty(inputText){
+	if(inputText.length < 1){
+		return true;
+	}else{
+		return false;
+	}
 }
 
