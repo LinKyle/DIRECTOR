@@ -26,6 +26,19 @@
 		<servlet-name>logoutServlet</servlet-name>
 		<servlet-class>	com.kingdee.eas.bos.pureflex.manager.servlet.LogoutServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>installStatus</servlet-name>
+		<servlet-class>	com.kingdee.eas.bos.pureflex.manager.servlet.InstallStatusServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>systemSetting</servlet-name>
+		<servlet-class>	com.kingdee.eas.bos.pureflex.manager.servlet.DefaultSystemSettingServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>deployVM</servlet-name>
+		<servlet-class>	com.kingdee.eas.bos.pureflex.manager.servlet.DeployVMServlet</servlet-class>
+	</servlet>
+	
 	<!-- servlet  -->
 	
 	<!-- servlet-mapping  -->
@@ -36,6 +49,18 @@
 	<servlet-mapping>
 		<servlet-name>logoutServlet</servlet-name>
 		<url-pattern>/logout.action</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>installStatus</servlet-name>
+		<url-pattern>/installStatus.action</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>systemSetting</servlet-name>
+		<url-pattern>/systemSetting.action</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>deployVM</servlet-name>
+		<url-pattern>/deployVM.action</url-pattern>
 	</servlet-mapping>
 	<!-- servlet-mapping  -->
 	

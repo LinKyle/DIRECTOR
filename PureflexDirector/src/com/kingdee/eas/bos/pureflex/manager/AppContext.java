@@ -18,6 +18,24 @@ public class AppContext {
 	public static final String WEB_APP_IP = "webAppIp";
 	public static final String WEB_APP_PORT = "webAppPort";
 	public static final String EAS_WORKLOAD_NAME = "easWorkload";
+	public static final String ALREADY_INSTALLED = "alreadyInstalled";
+	
+	/**
+	 * 虚拟机默认配置
+	 */
+	public static final String APP_SERVER_TYPE = "appServerType";
+	public static final String EAS_VERSION = "easVersion";
+	public static final String EAS_HOME = "easHome";
+	public static final String CLUSTER_HTTP_PORT = "clusterHttpPort";
+	public static final String CLUSTER_RPC_PORT = "clusterRpcPort";
+	public static final String ORACLE_HOME = "oracleHome";
+	public static final String ORACLE_SID = "oracleSID";
+	public static final String ORACLE_PORT = "oraclePort";
+	public static final String ORACLE_SYS_PSW = "oracleSysPSW";
+	public static final String CONCURRENT_LS300 = "concurrent_ls300";
+	public static final String CONCURRENT_GT300LS600 = "concurrent_gt300ls600";
+	public static final String CONCURRENT_GT600LS800 = "concurrent_gt600ls800";
+
 	private static String contextRecordPath;
 	private static Properties contents;
 	

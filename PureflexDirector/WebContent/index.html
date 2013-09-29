@@ -81,12 +81,12 @@
 	  					</tr>
 	  					<tr><td><span>应用服务器VIP</span></td>
 	  						<td>
-	  							<input type="text" name="easIp" /> 
+	  							<input type="text" value="192.168.1.100" name="easIp" /> 
 	  						</td>
 	  					</tr>
 	  				</tbody>
 	  			</table>
-	  			<input style="margin: 20px 0px 0px 400px;" class="button" type="button"  value="下一步" onclick="doNext('storeSetting')"/>
+	  			<input style="margin: 20px 0px 0px 400px;" class="button" type="button"  value="下一步" onclick="doNext('storeSetting',checkPageOneInput)"/>
         </div>
         <!-- End #tab1 -->
        <div class="tab-content" id="storeSetting">
@@ -95,23 +95,23 @@
        			<tbody>
        				<tr><td><span>存储设备IP</span></td>
 	  					<td>
-	  						<input type="text" name="storeIp" /> 
+	  						<input type="text" value="192.168.1.123" name="storeIp" /> 
 	  					</td>
 	  				</tr>
 	  				<tr><td><span>用户标识</span></td>
 	  					<td>
-	  						<input type="text" name="storeUser" /> 
+	  						<input type="text" value="sdfadf" name="storeUser" /> 
 	  					</td>
 	  				</tr>
 	  				<tr><td><span>用户口令</span></td>
 	  					<td>
-	  						<input type="password" name="storePassword" />  
+	  						<input type="password" value="sdfadf" name="storePassword" />  
 	  					</td>
 	  				</tr>
        			</tbody>
        		</table>
-  			<input style="margin: 20px 0px 0px 280px;" class="button" type="button"  value="上一步"  onclick="doPre('virtualSetting')"/>
-  			<input style="margin: 20px 0px 0px 0px;" class="button" type="button"  value="下一步" onclick="doNext('settingReport')"/>
+  			<input style="margin: 20px 0px 0px 280px;" class="button" type="button"  value="上一步"  onclick="doPre('virtualSetting',doNothing)"/>
+  			<input style="margin: 20px 0px 0px 0px;" class="button" type="button"  value="下一步" onclick="doNext('settingReport',checkPageTwoInput)"/>
        </div>
         <!-- End #tab2 -->
         <div class="tab-content" id="settingReport">
@@ -124,44 +124,44 @@
             	</thead>
             	<tbody>
               		<tr><td>EAS应用服务器VIP地址</td>
-						<td>192.168.1.1</td>
+						<td id="showEasIP">192.168.1.1</td>
               		</tr>
               		<tr><td>中间件</td>
-						<td>apusic</td>
+						<td id="showServerType">apusic</td>
               		</tr>
               		<tr><td>EAS版本</td>
-						<td>7.5</td>
+						<td id="showEasVersion">7.5</td>
               		</tr>
               		<tr><td>EAS安装目录</td>
-						<td>/opt/kingdee</td>
+						<td id="showEasHome">/opt/kingdee</td>
               		</tr>
               		<tr><td>网络代理端口号</td>
-						<td>6888</td>
+						<td id="showClusterHttpPort">6888</td>
               		</tr>
               		<tr><td>群集RPC端口号</td>
-						<td>11034</td>
+						<td  id="showClusterRpcPort">11034</td>
               		</tr>
 					<tr><td>EAS实例个数</td>
-						<td>3</td>
+						<td  id="showInstanceNum"></td>
               		</tr>
               		<tr><td>数据库服务器VIP地址</td>
-						<td>192.168.1.3</td>
+						<td id="showStoreServerIp">192.168.1.3</td>
               		</tr>
 					<tr><td>数据库服务器安装目录</td>
-						<td>/oracle</td>
+						<td id="showOracleHome">/oracle</td>
               		</tr>
               		<tr><td>数据库SID</td>
-						<td>orcl</td>
+						<td id="showOracleSID">orcl</td>
               		</tr>
 					<tr><td>数据库服务器端口号</td>
-						<td>1521</td>
+						<td id="showOraclePort">1521</td>
               		</tr>
               		<tr><td>数据库sys密码</td>
-						<td>123456</td>
+						<td id="showOracleSysPSW">123456</td>
               		</tr>
             </tbody>
           </table>
-          	<input style="margin: 20px 0px 0px 340px;" class="button" type="button"  value="上一步" onclick="doPre('storeSetting')"/>
+          	<input style="margin: 20px 0px 0px 340px;" class="button" type="button"  value="上一步" onclick="doPre('storeSetting',doNoting)"/>
 	  		<input style="margin: 20px 0px 0px 0px;" class="button" type="button"  value="开始安装" onclick="doTask()"/>
         </div>
          <div class="tab-content" id="taskProcess">
@@ -201,8 +201,6 @@
     <!-- End #footer -->
   </div>
   <!-- End #main-content -->
-</div>
-<div id="cache" isFirst="true" >
 </div>
 </body>
 </html>

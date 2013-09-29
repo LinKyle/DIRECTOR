@@ -14,15 +14,21 @@
 		  success:showLoginTips
 		});
 	}
-	function showLoginTips(loginResult){
-		if(loginResult.success){
-			window.location.href="\index.html";
-		}else{
-			$('#loginTip').text(loginResult.tips);
-		}
-		// 恢复登录按钮，去掉菊花
-		$("#Submit").removeClass();
-		$("#Submit").addClass("login_button");
-		$("#Submit").removeAttr("disabled");
-		$("#loading").attr("style","display:none");
+function showLoginTips(loginResult){
+	if(loginResult.success){
+		window.location.href="\index.html";
+	}else{
+		$('#loginTip').text(loginResult.tips);
 	}
+	// 恢复登录按钮，去掉菊花
+	$("#Submit").removeClass();
+	$("#Submit").addClass("login_button");
+	$("#Submit").removeAttr("disabled");
+	$("#loading").attr("style","display:none");
+}
+
+function enterLogin(event){
+	if (event.keyCode==13){
+		login();
+	}   
+}
