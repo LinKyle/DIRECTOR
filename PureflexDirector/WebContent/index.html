@@ -84,6 +84,11 @@
 	  							<input type="text" value="192.168.1.100" name="easIp" /> 
 	  						</td>
 	  					</tr>
+	  					<tr><td><span>网关</span></td>
+	  						<td>
+	  							<input type="text" value="192.168.1.1" name="gateway" /> 
+	  						</td>
+	  					</tr>
 	  				</tbody>
 	  			</table>
 	  			<input style="margin: 20px 0px 0px 400px;" class="button" type="button"  value="下一步" onclick="doNext('storeSetting',checkPageOneInput)"/>
@@ -161,7 +166,7 @@
               		</tr>
             </tbody>
           </table>
-          	<input style="margin: 20px 0px 0px 340px;" class="button" type="button"  value="上一步" onclick="doPre('storeSetting',doNoting)"/>
+          	<input style="margin: 20px 0px 0px 340px;" class="button" type="button"  value="上一步" onclick="doPre('storeSetting',doNothing)"/>
 	  		<input style="margin: 20px 0px 0px 0px;" class="button" type="button"  value="开始安装" onclick="doTask()"/>
         </div>
          <div class="tab-content" id="taskProcess">

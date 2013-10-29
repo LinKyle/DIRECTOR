@@ -112,6 +112,7 @@ function doTask(){
 	var checkTips = "温馨提示：\n";
 	var isShowTips = false;
 	var easIp = $("input[name='easIp']").val();
+	var gateway = $("input[name='gateway']").val();
 	var storeServerIp = $("input[name='storeIp']").val();
 	var storeServerUser = $("input[name='storeUser']").val();
 	var storeServerPassword = $("input[name='storePassword']").val();
@@ -120,6 +121,13 @@ function doTask(){
 		isShowTips = true;
 	}else if(checkIpFormatError(easIp)){
 		checkTips += "步骤1 中的应用服务器 ip 输入的格式不正确。\n";
+		isShowTips = true;
+	}
+	if(checkInputEmpty(gateway)){
+		checkTips += "步骤1 中的网关 ip 不能为空。\n";
+		isShowTips = true;
+	}else if(checkIpFormatError(gateway)){
+		checkTips += "步骤1 中的网关 ip 输入的格式不正确。\n";
 		isShowTips = true;
 	}
 	if(checkInputEmpty(storeServerIp)){
@@ -147,6 +155,7 @@ function doTask(){
 
 function doRealTask(){
 	var easIp = $("input[name='easIp']").val();
+	var gateway = $("input[name='gateway']").val();
 	var storeServerIp = $("input[name='storeIp']").val();
 	var storeServerUser = $("input[name='storeUser']").val();
 	var storeServerPassword = $("input[name='storePassword']").val();
@@ -156,7 +165,7 @@ function doRealTask(){
 		  type:"POST",
 		  url:"./deployVM.action",
 		  dataType:"json",
-		  data:"easIp="+easIp+"&storeServerIp="+storeServerIp+
+		  data:"easIp="+easIp+"&gateway="+gateway+"&storeServerIp="+storeServerIp+
 		  "&storeServerUser="+storeServerUser+"&storeServerPassword="
 		  +storeServerPassword+"&concurrentNum="+concurrentNum,
 		  success:doTaskSuccess
@@ -213,11 +222,19 @@ function checkPageOneInput(){
 	var checkTips = "温馨提示：\n";
 	var isShowTips = false;
 	var easIp = $("input[name='easIp']").val();
+	var gateway = $("input[name='gateway']").val();
 	if(checkInputEmpty(easIp)){
 		checkTips += "应用服务器 ip 不能为空。\n";
 		isShowTips = true;
 	}else if(checkIpFormatError(easIp)){
 		checkTips += "应用服务器 ip 输入的格式不正确。\n";
+		isShowTips = true;
+	}
+	if(checkInputEmpty(gateway)){
+		checkTips += "网关 ip 不能为空。\n";
+		isShowTips = true;
+	}else if(checkIpFormatError(gateway)){
+		checkTips += "网关 ip 输入的格式不正确。\n";
 		isShowTips = true;
 	}
 	if(isShowTips){

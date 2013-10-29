@@ -1,0 +1,33 @@
+{
+    "name": "[WORKLOAD_NAME]",
+    "instances": 1,
+    "project": "1",
+    "properties": [
+     	{
+            "name": "networkdevice.Network Adapter 1.usedhcp",
+            "basic": false,
+            "value": false
+        },
+        {
+            "name": "networkdevice.Network Adapter 1.ipaddress",
+            "basic": false,
+            "value": "192.168.2.100"
+        },
+        {
+            "name": "networkdevice.Network Adapter 1.netmask",
+            "basic": false,
+            "value": "255.255.255.0"
+        },
+        {
+            "name": "networkdevice.Network Adapter 1.gateway1",
+            "basic": false,
+            "value": "192.168.2.101"
+        },
+        {
+            "name": "obtainFromDNS.network1",
+            "basic": false,
+            "value": false
+        }
+    ],
+    "state": "EXECUTING"
+}
