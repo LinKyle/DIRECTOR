@@ -191,8 +191,7 @@ public class PureflexServiceImpl implements PureflexService{
 				HttpEntity entity = resp.getEntity();
 				if (entity != null) {
 					String jsonRes = EntityUtils.toString(entity);
-					Deployment deployment = SCEJsonParser.toDeployment(jsonRes);
-					return deployment.getState();
+					return SCEJsonParser.getDeploymentState(jsonRes);
 				}
 			} else {
 				throw new SCEExecutionException("Get error when getting deployment state");

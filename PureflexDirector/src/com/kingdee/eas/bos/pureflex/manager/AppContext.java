@@ -42,7 +42,7 @@ public class AppContext {
 	 * 更新虚拟机配置时使用到的参数名或参数前缀
 	 */
 	
-	public static final String  HOSTNAME_PARAM_PREFIX = "hostNameParamPrefix";
+	public static final String  HOSTNAME_PARAM = "hostNameParamPrefix";
 	public static final String  IP_PARAM_PERFIX="ipParamPerfix";
 	public static final String 	MASK_PARAM_PERFIX="maskParamPerfix";
 	public static final String 	GATEWAY_PARAM="gatewayParam";

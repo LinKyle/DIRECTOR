@@ -1,12 +1,6 @@
-/**
- * 
- */
 package com.kingdee.eas.bos.pureflex.manager.sce.info;
 
-/**
- * @author Jun Hong Li
- *
- */
+
 public class Deployment {
 	private String id;
 	private String name;
