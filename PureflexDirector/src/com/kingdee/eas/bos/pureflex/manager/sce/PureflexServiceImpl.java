@@ -90,6 +90,7 @@ public class PureflexServiceImpl implements PureflexService{
 		HttpPost request = new HttpPost(SCEContext.SECURED_API_URL + "/workloads"); //$NON-NLS-1$
 		request.addHeader("Authorization", SCEContext.getContent(SCEContext.AUTH_TOKEN)); //$NON-NLS-1$ //$NON-NLS-2$
 		request.addHeader("Content-Type", "application/json"); //$NON-NLS-1$ //$NON-NLS-2$
+		request.setHeader("ISDAPIVersion", "6.2.0.0");
 		request.setEntity(new EntityTemplate(new SCEContentProvider("{'appliance':'" +
 				System.getProperty("image_id") + "'}"))); //$NON-NLS-1$
 		
@@ -103,6 +104,7 @@ public class PureflexServiceImpl implements PureflexService{
 				HttpEntity entity = resp.getEntity();
 				if (entity != null) {
 					String jsonRes = EntityUtils.toString(entity);
+					logger.info(jsonRes);
 					deployment = SCEJsonParser.toDeployment(jsonRes);
 				}
 			}

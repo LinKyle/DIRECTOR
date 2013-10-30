@@ -3,25 +3,20 @@
     "instances": 1,
     "project": "1",
     "properties": [
-     	{
-            "name": "networkdevice.Network Adapter 1.usedhcp",
+        {
+            "name": "product.vs0.com.ibm.ovf.vmcontrol.adapter.networking.ipv4addresses.8",
             "basic": false,
-            "value": false
+            "value": "192.168.1.98"
         },
         {
-            "name": "networkdevice.Network Adapter 1.ipaddress",
-            "basic": false,
-            "value": "192.168.2.100"
-        },
-        {
-            "name": "networkdevice.Network Adapter 1.netmask",
+            "name": "product.vs0.com.ibm.ovf.vmcontrol.adapter.networking.ipv4netmasks.8",
             "basic": false,
             "value": "255.255.255.0"
         },
         {
-            "name": "networkdevice.Network Adapter 1.gateway1",
+            "name": "product.vs0.com.ibm.ovf.vmcontrol.system.networking.ipv4defaultgateway",
             "basic": false,
-            "value": "192.168.2.101"
+            "value": "192.168.1.1"
         },
         {
             "name": "obtainFromDNS.network1",
