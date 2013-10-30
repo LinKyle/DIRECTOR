@@ -1,12 +1,13 @@
 package com.kingdee.eas.bos.pureflex.manager.sce.info;
 
+import com.kingdee.eas.bos.pureflex.manager.AppContext;
+
 public class DeployConfig {
 	private String easIp = "";
 	private String storeServerIp ="";
 	private String storeServerUser ="";
 	private String storeServerPassword ="";
 	private String concurrentNum ="";
-	private String imageName = "";
 	private String imageType = "";
 	private String gateway = "";
 			
@@ -41,12 +42,15 @@ public class DeployConfig {
 	public void setConcurrentNum(String concurrentNum) {
 		this.concurrentNum = concurrentNum;
 	}
-	public String getImageName() {
-		return imageName;
+	public String getImageId() {
+		if(imageType.equals(AppContext.EAS_IMAGE)){
+			return AppContext.get(AppContext.EAS_IMAGE);
+		}else if(imageType.equals(AppContext.ORC_IMAGE)){
+			return AppContext.get(AppContext.ORC_IMAGE);
+		}
+		throw new IllegalArgumentException("can't get image id by imageType:[" + imageType +"]" );
 	}
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
+
 	public String getImageType() {
 		return imageType;
 	}

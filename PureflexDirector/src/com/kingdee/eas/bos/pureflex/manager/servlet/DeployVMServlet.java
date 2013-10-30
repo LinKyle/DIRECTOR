@@ -38,8 +38,7 @@ public class DeployVMServlet extends HttpServlet{
 		    deployConfig.setStoreServerIp(storeServerIp);
 		    deployConfig.setStoreServerPassword(storeServerPassword);
 		    deployConfig.setStoreServerUser(storeServerUser);
-		    deployConfig.setImageName(AppContext.get(AppContext.IMAGE_A));
-		    deployConfig.setImageType(AppContext.IMAGE_A);
+		    deployConfig.setImageType(AppContext.EAS_IMAGE);
 		    deployConfig.setGateway(gateway);
 		    
 		    try {

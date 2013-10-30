@@ -35,9 +35,19 @@ public class AppContext {
 	public static final String CONCURRENT_LS300 = "concurrent_ls300";
 	public static final String CONCURRENT_GT300LS600 = "concurrent_gt300ls600";
 	public static final String CONCURRENT_GT600LS800 = "concurrent_gt600ls800";
-	public static final String IMAGE_A = "image_A";
-	public static final String IMAGE_B = "image_B";
+	public static final String EAS_IMAGE = "easImageId";
+	public static final String ORC_IMAGE = "oraImageId";
 
+	/**
+	 * 更新虚拟机配置时使用到的参数名或参数前缀
+	 */
+	
+	public static final String  HOSTNAME_PARAM_PREFIX = "hostNameParamPrefix";
+	public static final String  IP_PARAM_PERFIX="ipParamPerfix";
+	public static final String 	MASK_PARAM_PERFIX="maskParamPerfix";
+	public static final String 	GATEWAY_PARAM="gatewayParam";
+
+	
 	private static String contextRecordPath;
 	private static Properties contents;
 	

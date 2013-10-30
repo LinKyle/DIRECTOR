@@ -10,6 +10,9 @@ package com.kingdee.eas.bos.pureflex.manager.sce.info;
 public class Deployment {
 	private String id;
 	private String name;
+	private String hostNameId;
+	private String netInterfaceId;
+	private String netInterfaceMaskId;
 	private String state;
 	/**
 	 * @return the id
@@ -47,4 +50,24 @@ public class Deployment {
 	public void setState(String state) {
 		this.state = state;
 	}
+	public String getHostNameId() {
+		return hostNameId;
+	}
+	public void setHostNameId(String hostNameId) {
+		this.hostNameId = hostNameId;
+	}
+	public String getNetInterfaceId() {
+		return netInterfaceId;
+	}
+	public void setNetInterfaceId(String netInterfaceId) {
+		this.netInterfaceId = netInterfaceId;
+	}
+	public String getNetInterfaceMaskId() {
+		return netInterfaceMaskId;
+	}
+	public void setNetInterfaceMaskId(String netInterfaceMaskId) {
+		this.netInterfaceMaskId = netInterfaceMaskId;
+	}
+	
+	
 }

@@ -4,19 +4,24 @@
     "project": "1",
     "properties": [
         {
-            "name": "product.vs0.com.ibm.ovf.vmcontrol.adapter.networking.ipv4addresses.8",
+            "name": "product.vs0.com.ibm.ovf.vmcontrol.adapter.networking.ipv4addresses.[INTERFACE_NUMBER]",
             "basic": false,
             "value": "192.168.1.98"
         },
         {
-            "name": "product.vs0.com.ibm.ovf.vmcontrol.adapter.networking.ipv4netmasks.8",
+            "name": "product.vs0.com.ibm.ovf.vmcontrol.system.networking.hostname",
+            "basic": false,
+            "value": "[HOST_NAME]"
+        },
+        {
+            "name": "product.vs0.com.ibm.ovf.vmcontrol.adapter.networking.ipv4netmasks.[INTERFACE_NUMBER]",
             "basic": false,
             "value": "255.255.255.0"
         },
         {
             "name": "product.vs0.com.ibm.ovf.vmcontrol.system.networking.ipv4defaultgateway",
             "basic": false,
-            "value": "192.168.1.1"
+            "value": "[GATEWAY]"
         },
         {
             "name": "obtainFromDNS.network1",

@@ -63,7 +63,7 @@ public class PureflexServiceImpl implements PureflexService{
 		String lastIPPart = easIP.split("\\.")[3];
 		String preIPPart = easIP.substring(0,easIP.length() - lastIPPart.length());
 		int lastPart = Integer.valueOf(lastIPPart);
-		if(type.equals(AppContext.IMAGE_A)){
+		if(type.equals(AppContext.EAS_IMAGE)){
 			return preIPPart + String.valueOf(lastPart-1);
 		}else{
 			return preIPPart + String.valueOf(lastPart-2);
@@ -79,7 +79,7 @@ public class PureflexServiceImpl implements PureflexService{
 		}else {
 			concurrent = "800";
 		}
-		if(imageType.equals(AppContext.IMAGE_A)){
+		if(imageType.equals(AppContext.EAS_IMAGE)){
 			return "EAS" + concurrent;
 		}else{
 			return "ORA" + concurrent;
@@ -90,9 +90,8 @@ public class PureflexServiceImpl implements PureflexService{
 		HttpPost request = new HttpPost(SCEContext.SECURED_API_URL + "/workloads"); //$NON-NLS-1$
 		request.addHeader("Authorization", SCEContext.getContent(SCEContext.AUTH_TOKEN)); //$NON-NLS-1$ //$NON-NLS-2$
 		request.addHeader("Content-Type", "application/json"); //$NON-NLS-1$ //$NON-NLS-2$
-		request.setHeader("ISDAPIVersion", "6.2.0.0");
 		request.setEntity(new EntityTemplate(new SCEContentProvider("{'appliance':'" +
-				System.getProperty("image_id") + "'}"))); //$NON-NLS-1$
+				deployConfig.getImageId() + "'}"))); //$NON-NLS-1$
 		
 		HttpClient client = new DefaultHttpClient();
 		System.out.println("Creating workload.");
