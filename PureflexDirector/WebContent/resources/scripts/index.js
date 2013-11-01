@@ -28,6 +28,7 @@ function adjustPage(result){
 		$('#AlreadyInstallDesc').hide();
 		$('#concurrentPage').hide();
 		$('#FirstInstallDesc').show();
+//		$('#compliteBtn').hide();
 	}else{
 		$('#FirstInstallDesc').hide();
 		$('#concurrentPage').show();
@@ -153,24 +154,60 @@ function doTask(){
 	}
 }
 
-function doRealTask(){
+function collectDeployParam(deployType){
 	var easIp = $("input[name='easIp']").val();
 	var gateway = $("input[name='gateway']").val();
 	var storeServerIp = $("input[name='storeIp']").val();
 	var storeServerUser = $("input[name='storeUser']").val();
 	var storeServerPassword = $("input[name='storePassword']").val();
 	var concurrentNum = $("input[name='concurrent']:checked").val();
+	
+	var postData = "easIp="+easIp+"&gateway="+gateway+"&storeServerIp="+storeServerIp+
+	  "&storeServerUser="+storeServerUser+"&storeServerPassword="
+	  +storeServerPassword+"&concurrentNum="+concurrentNum+"&deployType="+deployType;
+	
+	return postData;
+}
 
+function doRealTask(){
+	$("#deployEasVmStatus").html("<img alt='任务中' src='./resources/images/loading.gif'>");
+	var createEasWorkloadData = collectDeployParam("eas");
 	$.ajax({
 		  type:"POST",
 		  url:"./deployVM.action",
 		  dataType:"json",
-		  data:"easIp="+easIp+"&gateway="+gateway+"&storeServerIp="+storeServerIp+
-		  "&storeServerUser="+storeServerUser+"&storeServerPassword="
-		  +storeServerPassword+"&concurrentNum="+concurrentNum,
-		  success:doTaskSuccess
+		  data:createEasWorkloadData,
+		  success:doAfterDeployEasWorkload
 		});
 }
+
+function doAfterDeployEasWorkload(deployResult){
+	if(deployResult.isSuccess){
+		$("#deployEasVmStatus").html("<img alt='完成' src='./resources/images/start.png'>");
+		$("#deployOraVmStatus").html("<img alt='任务中' src='./resources/images/loading.gif'>");
+		var createOraWorkloadDate = collectDeployParam("ora");
+		$.ajax({
+			  type:"POST",
+			  url:"./deployVM.action",
+			  dataType:"json",
+			  data:createOraWorkloadDate,
+			  success:doAfterDeployOraWorkload
+			});
+	}else{
+		$("#deployEasVmStatus").text(deployResult.tips);
+	}
+}
+
+function doAfterDeployOraWorkload(deployResult){
+	if(deployResult.isSuccess){
+		$("#deployOraVmStatus").html("<img alt='完成' src='./resources/images/start.png'>");
+		$('#concurrentPage').show();
+		//		$('#compliteBtn').show();
+	}else{
+		$("#deployOraVmStatus").text(deployResult.tips);
+	}
+}
+
 
 function checkBeforeDoTask(){
 	//检查storeServer 是否可用
@@ -183,9 +220,7 @@ function checkBeforeDoTask(){
 }
 
 function doTaskSuccess(){
-	$('#cache').attr('isFirst',"false");
-	$('#AlreadyInstallDesc').show();
-	$('#installDesc').hide();
+	
 	$('#concurrentPage').show();
 }
 

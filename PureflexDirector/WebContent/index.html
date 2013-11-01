@@ -7,7 +7,7 @@
 
 
 <script type="text/javascript" src="resources/scripts/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="resources/scripts/uba.js"></script>
+<script type="text/javascript" src="resources/scripts/index.js"></script>
 <script type="text/javascript" src="resources/scripts/logout.js"></script>
 
 
@@ -178,21 +178,15 @@
               		</tr>
             	</thead>
             	<tbody>
-              		<tr><td>虚拟化配置</td>
-						<td><img alt="完成" src="./resources/images/start.png"></td>
+              		<tr><td>使用EAS镜像创建部署虚拟机</td>
+						<td id="deployEasVmStatus"></td>
               		</tr>
-              		<tr><td>EAS应用环境安装配置</td>
-						<td><img alt="完成" src="./resources/images/start.png"></td>
-              		</tr>
-              		<tr><td>EAS数据中心安装配置</td>
-						<td><img alt="完成" src="./resources/images/start.png"></td>
-              		</tr>
-              		<tr><td>注册EAS数据中心</td>
-						<td><img alt="任务中" src="./resources/images/loading.gif"></td>
+              		<tr><td>使用ORA镜像创建部署虚拟机</td>
+						<td id="deployOraVmStatus"></td>
               		</tr>
             </tbody>
           </table>
-	          	<input style="margin: 0px 0px 0px 400px;" class="button" type="button"  value="模拟任务完成" onclick="doTaskSuccess()"/>
+	       <!--   	<input id="compliteBtn" style="margin: 0px 0px 0px 400px;" class="button" type="button"  value="任务完成" onclick="doTaskSuccess()"/> -->  
          </div>
         <!-- End #tab3 -->
       </div>

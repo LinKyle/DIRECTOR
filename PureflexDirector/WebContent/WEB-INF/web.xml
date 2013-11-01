@@ -31,6 +31,10 @@
 		<servlet-class>	com.kingdee.eas.bos.pureflex.manager.servlet.InstallStatusServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>concurrentNum</servlet-name>
+		<servlet-class>	com.kingdee.eas.bos.pureflex.manager.servlet.ConcurrentInfoServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>systemSetting</servlet-name>
 		<servlet-class>	com.kingdee.eas.bos.pureflex.manager.servlet.DefaultSystemSettingServlet</servlet-class>
 	</servlet>
@@ -54,6 +58,11 @@
 		<servlet-name>installStatus</servlet-name>
 		<url-pattern>/installStatus.action</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>concurrentNum</servlet-name>
+		<url-pattern>/concurrentNum.action</url-pattern>
+	</servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>systemSetting</servlet-name>
 		<url-pattern>/systemSetting.action</url-pattern>

@@ -43,12 +43,7 @@ public class DeployConfig {
 		this.concurrentNum = concurrentNum;
 	}
 	public String getImageId() {
-		if(imageType.equals(AppContext.EAS_IMAGE)){
-			return AppContext.get(AppContext.EAS_IMAGE);
-		}else if(imageType.equals(AppContext.ORC_IMAGE)){
-			return AppContext.get(AppContext.ORC_IMAGE);
-		}
-		throw new IllegalArgumentException("can't get image id by imageType:[" + imageType +"]" );
+		return AppContext.get(imageType);
 	}
 
 	public String getImageType() {

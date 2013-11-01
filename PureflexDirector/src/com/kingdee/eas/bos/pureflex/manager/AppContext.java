@@ -19,6 +19,9 @@ public class AppContext {
 	public static final String WEB_APP_PORT = "webAppPort";
 	public static final String EAS_WORKLOAD_NAME = "easWorkload";
 	public static final String ALREADY_INSTALLED = "alreadyInstalled";
+	public static final String CONCURRENT_NUM = "concurrentNum";
+
+	
 	
 	/**
 	 * 虚拟机默认配置
@@ -36,7 +39,9 @@ public class AppContext {
 	public static final String CONCURRENT_GT300LS600 = "concurrent_gt300ls600";
 	public static final String CONCURRENT_GT600LS800 = "concurrent_gt600ls800";
 	public static final String EAS_IMAGE = "easImageId";
-	public static final String ORC_IMAGE = "oraImageId";
+	public static final String ORA_IMAGE = "oraImageId";
+	public static final String EAS_WORKLOAD_ID = "easWorkloadId";
+	public static final String ORA_WORKLOAD_ID = "oraWorkloadId";
 
 	/**
 	 * 更新虚拟机配置时使用到的参数名或参数前缀
@@ -74,7 +79,7 @@ public class AppContext {
 	}
 	
 	
-	public static boolean saveContext(){
+	public static boolean saveContext2File(){
 		File contextRecordFile = new File(contextRecordPath)  ;
 		try {
 			FileWriter fw = new FileWriter(contextRecordFile, false);

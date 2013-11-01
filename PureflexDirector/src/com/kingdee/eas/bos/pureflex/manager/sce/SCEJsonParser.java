@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.kingdee.eas.bos.pureflex.manager.AppContext;
-import com.kingdee.eas.bos.pureflex.manager.sce.info.Deployment;
+import com.kingdee.eas.bos.pureflex.manager.sce.info.WorkloadInfo;
 
 
 public final class SCEJsonParser {
@@ -35,37 +35,30 @@ public final class SCEJsonParser {
 //        return appliances;
 //    }
     
-    public static Deployment toDeployment(String jsonStr) {
-    	Deployment deployment = new Deployment();
+    public static WorkloadInfo toWorkload(String jsonStr) {
+    	WorkloadInfo workload = new WorkloadInfo();
     	JSONObject jsonObj = null;
 		try {
 			jsonObj = new JSONObject(jsonStr);
 		} catch (JSONException e) {
 		}
-    	deployment.setId(jsonObj.optString("id"));
+		workload.setId(jsonObj.optString("id"));
     	try {
 			JSONArray propertiesArray = jsonObj.getJSONArray("properties");
 			for(int i = 0; i < propertiesArray.length(); i ++){
 				JSONObject property = propertiesArray.getJSONObject(i);
 				String propertyName = property.getString("name");
 				if(propertyName.startsWith(AppContext.get(AppContext.IP_PARAM_PERFIX))){
-					deployment.setNetInterfaceId(propertyName);
+					workload.setNetInterfaceId(propertyName);
 				}
 				if(propertyName.startsWith(AppContext.get(AppContext.MASK_PARAM_PERFIX))){
-					deployment.setNetInterfaceMaskId(propertyName);
+					workload.setNetInterfaceMaskId(propertyName);
 				}
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	deployment.setName(jsonObj.optString("name"));
-    	JSONObject stateObj = jsonObj.optJSONObject("state");
-    	if (stateObj != null) {
-    		deployment.setState(stateObj.optString("id"));
-    	}
-    	return deployment;
+    	return workload;
     }
     
     public static String getDeploymentState(String jsonString){

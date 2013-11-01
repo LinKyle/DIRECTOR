@@ -21,7 +21,8 @@ import com.kingdee.eas.bos.pureflex.manager.AppContext;
 import com.kingdee.eas.bos.pureflex.manager.exception.LoginErrorException;
 import com.kingdee.eas.bos.pureflex.manager.exception.SCEExecutionException;
 import com.kingdee.eas.bos.pureflex.manager.sce.info.DeployConfig;
-import com.kingdee.eas.bos.pureflex.manager.sce.info.Deployment;
+import com.kingdee.eas.bos.pureflex.manager.sce.info.DeployResult;
+import com.kingdee.eas.bos.pureflex.manager.sce.info.WorkloadInfo;
 
 public class PureflexServiceImpl implements PureflexService{
 
@@ -86,77 +87,39 @@ public class PureflexServiceImpl implements PureflexService{
 		}
 	}
 
-	public void createDeployment(DeployConfig deployConfig) throws Exception{
-		HttpPost request = new HttpPost(SCEContext.SECURED_API_URL + "/workloads"); //$NON-NLS-1$
-		request.addHeader("Authorization", SCEContext.getContent(SCEContext.AUTH_TOKEN)); //$NON-NLS-1$ //$NON-NLS-2$
-		request.addHeader("Content-Type", "application/json"); //$NON-NLS-1$ //$NON-NLS-2$
-		request.setEntity(new EntityTemplate(new SCEContentProvider("{'appliance':'" +
-				deployConfig.getImageId() + "'}"))); //$NON-NLS-1$
-		
-		HttpClient client = new DefaultHttpClient();
-		System.out.println("Creating workload.");
-		Deployment deployment = null;
-		try {
-			HttpResponse resp = client.execute(request);
-			int rc = resp.getStatusLine().getStatusCode();
-			if(rc == 201) {
-				HttpEntity entity = resp.getEntity();
-				if (entity != null) {
-					String jsonRes = EntityUtils.toString(entity);
-					logger.info(jsonRes);
-					deployment = SCEJsonParser.toDeployment(jsonRes);
-				}
-			}
-			
-			if (deployment == null) {
-				throw new SCEExecutionException("The deployment hasn't been created successfully");
-			}
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			throw new SCEExecutionException("The deployment hasn't been created successfully");
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new SCEExecutionException("The deployment hasn't been created successfully");
-		} finally {
-			client.getConnectionManager().shutdown();
+	public DeployResult deployWorkload(DeployConfig deployConfig){
+		WorkloadInfo workload = createWorkload(deployConfig);
+		if(workload == null){
+			boolean isCreateSuccess = false;
+			String tips = "创建虚拟机失败,请联系金蝶技术支持人员分析";
+			return new DeployResult(isCreateSuccess,tips);
 		}
-		
-		System.out.println("Updating workload.");
-		client = new DefaultHttpClient();
-		HttpPut updateRequest = new HttpPut(SCEContext.SECURED_API_URL + "/workloads/" + deployment.getId());
-		updateRequest.addHeader("Authorization", SCEContext.getContent(SCEContext.AUTH_TOKEN)); //$NON-NLS-1$ //$NON-NLS-2$
-		updateRequest.addHeader("Content-Type", "application/json"); //$NON-NLS-1$ //$NON-NLS-2$
-		try {
-			String updateModel =  JsonFileReader.readFile(AppContext.getHome() + "/config/updateDeployment.json");
-			String workloadName = this.generateWorkloadName(deployConfig.getImageType(),deployConfig.getConcurrentNum());
-			String workloadIp = this.calcWorkloadsIP(deployConfig.getImageType(), deployConfig.getEasIp());
-//			String updateDate = updateModel.replace("[WORKLOAD_NAME]", workloadName).replace("[IP]", workloadIp).replace("[GATEWAY]", deployConfig.getGateway()); 
-			String updateDate = updateModel.replace("[WORKLOAD_NAME]", workloadName); 
-			updateRequest.setEntity(new EntityTemplate(new SCEContentProvider(updateDate)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} //$NON-NLS-1$
-		
+		logger.info("Updating workload.");
+		boolean isUpdateSuccess = false;
+		String tips = "部署虚拟机失败,请联系金蝶技术支持人员分析";
+		HttpClient client = new DefaultHttpClient();
+		HttpPut updateRequest = new HttpPut(SCEContext.SECURED_API_URL + "/workloads/" + workload.getId());
+		updateRequest.addHeader("Authorization", SCEContext.getContent(SCEContext.AUTH_TOKEN)); 
+		updateRequest.addHeader("Content-Type", "application/json"); 
+		String updateData = generateUpdateData(workload,deployConfig);
+		updateRequest.setEntity(new EntityTemplate(new SCEContentProvider(updateData)));
 		try {
 			HttpResponse resp = client.execute(updateRequest);
 			int rc = resp.getStatusLine().getStatusCode();
 			if(rc != 200) {
-				throw new SCEExecutionException("The deployment cannot be updated");
+				logger.error("The deployment cannot be updated , statusCode "+rc);
+		        return new DeployResult(isUpdateSuccess,tips);
 			}
 		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			throw new SCEExecutionException("The deployment hasn't been updated successfully");
+			logger.error("",e);
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new SCEExecutionException("The deployment hasn't been updated successfully");
+			logger.error("",e);
 		} finally {
 			client.getConnectionManager().shutdown();
 		}
-		
-		System.out.println("Synchronizing workload status.");
-		HttpGet getRequest = new HttpGet(SCEContext.SECURED_API_URL + "/workloads/" + deployment.getId()); //$NON-NLS-1$
+		logger.info("Synchronizing workload status.");
+		HttpGet getRequest = new HttpGet(SCEContext.SECURED_API_URL + "/workloads/" + workload.getId()); //$NON-NLS-1$
 		getRequest.addHeader("Authorization", SCEContext.getContent(SCEContext.AUTH_TOKEN)); //$NON-NLS-1$ //$NON-NLS-2$
-		
         int retryMax = 10;
         for (int i = 0; i < retryMax; i++) {
         	String deploymentState = getDeploymentState(getRequest);
@@ -169,10 +132,72 @@ public class PureflexServiceImpl implements PureflexService{
 					e.printStackTrace();
 				}
         	} else {
-        		System.out.println("The deployment has been done.");
+        		logger.info("The deployment has been done.");
+        		isUpdateSuccess = true;
+        		tips = "";
+        		if(deployConfig.getImageType().equals(AppContext.ORA_IMAGE)){
+        			AppContext.put(AppContext.ORA_WORKLOAD_ID, workload.getId());
+        			AppContext.put(AppContext.ALREADY_INSTALLED,"true");
+        			AppContext.saveContext2File();
+        		}else{
+        			//先创建eas虚拟机，完成后等待创建ora虚拟机，先不保存上下文
+        			AppContext.put(AppContext.EAS_WORKLOAD_ID, workload.getId());
+        		}
         		break;
         	}
         }
+        return new DeployResult(isUpdateSuccess,tips);
+	}
+	
+	private String generateUpdateData(WorkloadInfo workload,DeployConfig config) {
+		//参数准备
+		String workloadName = this.generateWorkloadName(config.getImageType(),config.getConcurrentNum());
+		String gateway = config.getGateway();
+		String hostName = workloadName;
+		String workloadIp = this.calcWorkloadsIP(config.getImageType(), config.getEasIp());
+		try {
+			String updateModel =  JsonFileReader.readFile(AppContext.getHome() + "/config/updateDeployment.json");
+			String updateData = updateModel.replace("[WORKLOAD_NAME]", workloadName);
+			updateData = updateData.replace("[INTERFACE_PARAM]", workload.getNetInterfaceId());
+			updateData = updateData.replace("[INTERFACE_SETTING]", workloadIp);
+			updateData = updateData.replace("[HOST_NAME]", hostName);
+			updateData = updateData.replace("[MASK_PARAM]", workload.getNetInterfaceMaskId());
+			updateData = updateData.replace("[GATEWAY_SETTING]", gateway);
+			logger.info("updateDate:");
+			logger.info(updateData);
+			return updateData;
+		} catch (IOException e) {
+			logger.error("",e);
+		} 		
+		return null;
+	}
+
+	private WorkloadInfo createWorkload(DeployConfig config){
+		HttpPost request = new HttpPost(SCEContext.SECURED_API_URL + "/workloads");
+		request.addHeader("Authorization", SCEContext.getContent(SCEContext.AUTH_TOKEN));
+		request.addHeader("Content-Type", "application/json"); 
+		request.setEntity(new EntityTemplate(new SCEContentProvider("{'appliance':'" +
+				config.getImageId() + "'}")));
+		HttpClient client = new DefaultHttpClient();
+		logger.info("Creating workload.");
+		WorkloadInfo workload = null;
+		try {
+			HttpResponse resp = client.execute(request);
+			if(resp.getStatusLine().getStatusCode() == 201) {
+				HttpEntity entity = resp.getEntity();
+				if (entity != null) {
+					String jsonRes = EntityUtils.toString(entity);
+					workload = SCEJsonParser.toWorkload(jsonRes);
+				}
+			}
+		} catch (ClientProtocolException e) {
+			logger.error("", e);
+		} catch (IOException e) {
+			logger.error("", e);
+		} finally {
+			client.getConnectionManager().shutdown();
+		}
+		return workload;
 	}
 	
 	/**
@@ -181,12 +206,11 @@ public class PureflexServiceImpl implements PureflexService{
 	 * @return
 	 * @throws SCEExecutionException 
 	 */
-	private String getDeploymentState(HttpGet getRequest) throws SCEExecutionException {
+	private String getDeploymentState(HttpGet getRequest) {
 		HttpClient client = new DefaultHttpClient();
 		try {
 			HttpResponse resp = client.execute(getRequest);
 			int rc = resp.getStatusLine().getStatusCode();
-			
 			if(rc == 200) {
 				HttpEntity entity = resp.getEntity();
 				if (entity != null) {
@@ -194,21 +218,70 @@ public class PureflexServiceImpl implements PureflexService{
 					return SCEJsonParser.getDeploymentState(jsonRes);
 				}
 			} else {
-				throw new SCEExecutionException("Get error when getting deployment state");
+				logger.warn("Get error when getting deployment state");
 			}
 		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-			throw new SCEExecutionException("Get error when getting deployment state");
+			logger.warn("Get error when getting deployment state");
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new SCEExecutionException("Get error when getting deployment state");
+			logger.warn("Get error when getting deployment state");
 		} finally {
 			client.getConnectionManager().shutdown();
 		}
 		return null;
 	}
 	
-
+	public DeployResult updateWorkload(DeployConfig deployConfig){
+			WorkloadInfo workload = new WorkloadInfo();
+			logger.info("Updating workload.");
+			boolean isUpdateSuccess = false;
+			String tips = "部署虚拟机失败,请联系金蝶技术支持人员分析";
+			HttpClient client = new DefaultHttpClient();
+			HttpPut updateRequest = new HttpPut(SCEContext.SECURED_API_URL + "/workloads/" + workload.getId());
+			updateRequest.addHeader("Authorization", SCEContext.getContent(SCEContext.AUTH_TOKEN)); 
+			updateRequest.addHeader("Content-Type", "application/json"); 
+			String updateData = generateUpdateData(workload,deployConfig);
+			updateRequest.setEntity(new EntityTemplate(new SCEContentProvider(updateData)));
+			try {
+				HttpResponse resp = client.execute(updateRequest);
+				int rc = resp.getStatusLine().getStatusCode();
+				if(rc != 200) {
+					logger.error("The deployment cannot be updated , statusCode "+rc);
+			        return new DeployResult(isUpdateSuccess,tips);
+				}
+			} catch (ClientProtocolException e) {
+				logger.error("",e);
+			} catch (IOException e) {
+				logger.error("",e);
+			} finally {
+				client.getConnectionManager().shutdown();
+			}
+			logger.info("Synchronizing workload status.");
+			HttpGet getRequest = new HttpGet(SCEContext.SECURED_API_URL + "/workloads/" + workload.getId()); //$NON-NLS-1$
+			getRequest.addHeader("Authorization", SCEContext.getContent(SCEContext.AUTH_TOKEN)); //$NON-NLS-1$ //$NON-NLS-2$
+	        int retryMax = 10;
+	        for (int i = 0; i < retryMax; i++) {
+	        	String deploymentState = getDeploymentState(getRequest);
+	        	if (deploymentState != null && 
+	        			deploymentState.equalsIgnoreCase(SCEContext.EXECUTING)) {
+	        		try {
+						Thread.sleep(15*1000);
+						retryMax++;
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+	        	} else {
+	        		logger.info("The deployment has been done.");
+	        		isUpdateSuccess = true;
+	        		tips = "";
+	        		if(deployConfig.getImageType().equals(AppContext.ORA_IMAGE)){
+	        			AppContext.put(AppContext.ALREADY_INSTALLED,"true");
+	        			AppContext.saveContext2File();
+	        		}
+	        		break;
+	        	}
+	        }
+	        return new DeployResult(isUpdateSuccess,tips);
+	}
 	
 	
 }

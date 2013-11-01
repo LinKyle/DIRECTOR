@@ -1,0 +1,11 @@
+{
+    "name": "[WORKLOAD_NAME]",
+    "properties": [
+        {
+            "name": "product.vs0.com.ibm.ovf.vmcontrol.system.networking.hostname",
+            "basic": false,
+            "value": "[HOST_NAME]"
+        }
+    ],
+    "state": "EXECUTING"
+}

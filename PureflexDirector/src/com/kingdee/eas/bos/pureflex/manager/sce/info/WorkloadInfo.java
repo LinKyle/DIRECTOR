@@ -1,7 +1,7 @@
 package com.kingdee.eas.bos.pureflex.manager.sce.info;
 
 
-public class Deployment {
+public class WorkloadInfo {
 	private String id;
 	private String name;
 	private String hostNameId;
